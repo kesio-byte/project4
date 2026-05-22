@@ -20,10 +20,11 @@
   <div class="container">
     <a class="navbar-brand fw-bold text-white" href="{% url 'index' %}">Network</a>
     <ul class="navbar-nav ms-auto">
+
       {% if user.is_authenticated %}
 
       <!-- if user is authenticated do the following please -->
-        <a class="nav-link text-white" href="{% url 'profile' user.username %}">
+        <a class="nav-link text-white text-capitalize" href="{% url 'profile' user.username %}">
           <strong>{{ user.username }}</strong>
         </a>
 
