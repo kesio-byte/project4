@@ -12,8 +12,8 @@
         </span>
       </div>
 
-      <!-- Username -->
-      <h3 class="card-title mb-1">{{ profile_user.username }}</h3>
+      <!-- Username using bootstrap classes capitalise  the profile username-->
+      <h3 class="card-title mb-1 text-capitalize">{{ profile_user.username }}</h3>
 
       <!-- Followers / Following -->
       <p class="text-muted mb-3">
@@ -21,7 +21,7 @@
         <strong>{{ following_count }}</strong> Following
       </p>
 
-      <!-- Follow/Unfollow button -->
+      <!-- Follow/Unfollow toggling button -->
       {% if user.is_authenticated and user != profile_user %}
         <form action="{% url 'toggle_follow' profile_user.username %}" method="post" class="d-inline">
           {% csrf_token %}
