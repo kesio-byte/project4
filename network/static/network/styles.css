@@ -53,3 +53,7 @@ body {
 .page-link:hover {
   background-color: #e9ecef;
 }
+/* Cpitalise all names */
+.username {
+  text-transform: capitalize;
+}

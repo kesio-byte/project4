@@ -4,7 +4,8 @@
   <!-- Profile Card -->
   <div class="card mb-4 shadow-sm">
     <div class="card-body text-center">
-      <!-- Avatar placeholder: first letter of username -->
+
+      <!-- Avatar placeholder: first letter of username in future it will display the actual img -->
       <div class="mb-3">
         <span class="avatar bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center"
               style="width:70px; height:70px; font-size:28px;">
@@ -12,8 +13,8 @@
         </span>
       </div>
 
-      <!-- Username using bootstrap classes capitalise  the profile username-->
-      <h3 class="card-title mb-1 text-capitalize">{{ profile_user.username }}</h3>
+      <!-- Username using css globe classes capitalise  the profile username-->
+      <h3 class="card-title mb-1 username">{{ profile_user.username }}</h3>
 
       <!-- Followers / Following -->
       <p class="text-muted mb-3">
@@ -39,9 +40,10 @@
   <h3 class="mb-3">Posts</h3>
   {% for post in posts %}
     <div class="post card mb-3 shadow-sm">
-      <!-- Post header -->
+
+      <!-- Post header Apply Global CSS Capitalisation-->
       <div class="card-header d-flex justify-content-between align-items-center">
-        <a href="{% url 'profile' post.user.username %}" class="fw-bold text-decoration-none">
+        <a href="{% url 'profile' post.user.username %}" class="fw-bold text-decoration-none  username">
           {{ post.user.username }}
         </a>
         <small class="text-muted">{{ post.timestamp }}</small>
