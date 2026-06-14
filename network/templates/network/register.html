@@ -7,7 +7,8 @@
     {% if message %}
         <div>{{ message }}</div>
     {% endif %}
-
+    
+<!-- The registration form includes fields for username, email, password, and password confirmation. -->
     <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
@@ -25,6 +26,7 @@
         <input class="btn btn-primary" type="submit" value="Register">
     </form>
 
+     <!-- Already have an account? -->
     Already have an account? <a href="{% url 'login' %}">Log In here.</a>
 
 {% endblock %}

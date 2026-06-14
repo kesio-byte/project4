@@ -9,7 +9,7 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-# index view to handle both displaying posts and creating new ones:
+# Add index view to handle both displaying posts and creating new ones:
 def index(request):
     if request.method == "POST":
         if request.user.is_authenticated:
@@ -18,10 +18,10 @@ def index(request):
                 Post.objects.create(user=request.user, content=content)
             return redirect("index")
 
-    # Fetch all posts, newest first
+    # Fetch all posts, newest first yah
     posts_list = Post.objects.all().order_by("-timestamp")
 
-    # Paginate: 10 posts per page
+    # Paginate: 10 posts per page yes
     paginator = Paginator(posts_list, 10)
     page_number = request.GET.get("page")
     posts = paginator.get_page(page_number)
@@ -30,6 +30,7 @@ def index(request):
         "posts": posts
     })
 
+#Add views for user authentication (login, logout, register):
 def login_view(request):
     if request.method == "POST":
 
@@ -49,12 +50,12 @@ def login_view(request):
     else:
         return render(request, "network/login.html")
 
-
+# Add a view to handle user logout:
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
-
+# Add a view to handle user registration:
 def register(request):
     if request.method == "POST":
         username = request.POST["username"]
@@ -63,7 +64,7 @@ def register(request):
         # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
-        if password != confirmation:
+        if password != confirmation: # If not match, please return an error message
             return render(request, "network/register.html", {
                 "message": "Passwords must match."
             })
@@ -80,8 +81,9 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
-
-@login_required
+    
+# Add a view to create new posts:
+@login_required # My view is decorated with @login_required, so only authenticated users can access it.
 def new_post(request):
     if request.method == "POST":
         content = request.POST.get("content")
@@ -100,10 +102,13 @@ def profile(request, username):
     page_number = request.GET.get("page")
     posts = paginator.get_page(page_number)
 
+    # Calculate counts directly from the Follow model:
     followers_count = profile_user.followers.count()
     following_count = profile_user.following.count()
 
     is_following = False
+    
+    # Check if the logged-in user is following the profile user
     if request.user.is_authenticated and request.user != profile_user:
         is_following = Follow.objects.filter(
             follower=request.user, following=profile_user
@@ -117,7 +122,7 @@ def profile(request, username):
         "is_following": is_following
     })
 
-
+# Add a view to toggle following/unfollowing a user:
 @login_required
 def toggle_follow(request, username):
     profile_user = get_object_or_404(User, username=username)
@@ -129,7 +134,7 @@ def toggle_follow(request, username):
             Follow.objects.create(follower=request.user, following=profile_user)
     return redirect("profile", username=username)
 
-#Views for adding pagination (10 posts per page)
+#Add views for adding pagination (10 posts per page)
 def index(request):
     if request.method == "POST":
         if request.user.is_authenticated:
